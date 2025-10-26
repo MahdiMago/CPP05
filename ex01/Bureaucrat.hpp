@@ -43,7 +43,6 @@ public:
 };
 
 std::ostream &operator<<(std::ostream& os, Bureaucrat& bureau);
-// std::ostream &operator<<(std::ostream& os, std::exeption& w);
 
 
 #endif
