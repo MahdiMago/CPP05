@@ -1,26 +1,87 @@
+#include <iostream>
 #include "Bureaucrat.hpp"
 
-int	main(void)
+int main()
 {
-	try {
-	Bureaucrat b;
-	Bureaucrat a("elien");
-	Bureaucrat c("amandine", 45);
+	std::cout << "--- TEST 1 : Normal usage ---" << std::endl;
+	try
+	{
+		Bureaucrat bob("Bob", 2);
+		std::cout << bob << std::endl;
+		
+		bob.incrementGrade();
+		std::cout << "After increment: " << bob << std::endl;
 
-	std::cout << b << std::endl;
-	std::cout << a << std::endl;
-	std::cout << c << std::endl;
-
-	// b.addGrade(5);
-	c.subGrade(500);
-
-	std::cout << c << std::endl;
-
-
+		bob.decrementGrade();
+		std::cout << "After decrement: " << bob << std::endl;
 	}
-	catch (std::exception &e) {
-		std::cout << e.what();
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << '\n';
+	}
+	    
+	std::cout << "\n----------------------------------\n" << std::endl;
+
+	std::cout << "--- TEST 2 : Increment Error (Too High) ---" << std::endl;
+	try
+	{
+		Bureaucrat boss("The Boss", 1);
+		std::cout << boss << std::endl;
+		
+		std::cout << "Try to increment grade 1..." << std::endl;
+		boss.incrementGrade();
+		
+		std::cout << "This line should not print." << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << '\n';
 	}
 
-	return (0);
+	std::cout << "\n----------------------------------\n" << std::endl;
+
+	// --- TEST 3 : ERREUR DECREMENTATION (Grade 150 -> 151) ---
+	std::cout << "--- TEST 3 : Decrement Error (Too Low) ---" << std::endl;
+	try
+	{
+		Bureaucrat stagiaire("Intern", 150);
+		std::cout << stagiaire << std::endl;
+
+		std::cout << "Try to decrement grade 150..." << std::endl;
+		stagiaire.decrementGrade(); // BOOM ici
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << '\n';
+	}
+
+	std::cout << "\n----------------------------------\n" << std::endl;
+
+	// --- TEST 4 : CONSTRUCTEUR INVALIDE (Trop haut) ---
+	std::cout << "--- TEST 4 : Constructor Error (Too High) ---" << std::endl;
+	try
+	{
+		std::cout << "Try to create God with grade 0..." << std::endl;
+		Bureaucrat god("God", 0);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << '\n';
+	}
+
+	std::cout << "\n----------------------------------\n" << std::endl;
+
+	// --- TEST 5 : CONSTRUCTEUR INVALIDE (Trop bas) ---
+	std::cout << "--- TEST 5 : Constructor Error (Too Low) ---" << std::endl;
+	try
+	{
+		std::cout << "Try to create Alien with grade 200..." << std::endl;
+		Bureaucrat alien("Alien", 200);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << '\n';
+	}
+
+	return 0;
 }
