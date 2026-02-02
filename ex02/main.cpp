@@ -1,47 +1,100 @@
 #include <iostream>
+#include <cstdlib> // Pour srand
+#include <ctime>   // Pour time
+
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp" 
+#include "childs/ShrubberyCreationForm.hpp"
+#include "childs/RobotomyRequestForm.hpp"
+#include "childs/PresidentialPardonForm.hpp"
+
+void printTitle(std::string title) {
+	std::cout << "\n--- " << title << " ---" << std::endl;
+}
 
 int main()
 {
-	std::cout << "--- TEST 1 : SUCCESSFUL SIGN ---" << std::endl;
+	std::srand(std::time(NULL));
+
+	printTitle("TEST 1: SHRUBBERY CREATION (Jardinage)");
 	try {
-		Bureaucrat bob("Bob", 2);
-		Form	taxForm("Tax Form", 20, 50);
+		Bureaucrat  bob("Bob (Jardinier)", 137); // Grade suffisant pour tout
+		ShrubberyCreationForm shrub("Jardin");
 
 		std::cout << bob << std::endl;
-		std::cout << taxForm << std::endl;
+		std::cout << shrub << std::endl;
 
-		bob.signForm(taxForm);
-		
-		std::cout << taxForm << std::endl; 
+		bob.signForm(shrub);
+		bob.executeForm(shrub);
 	}
 	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << "Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n--- TEST 2 : GRADE TOO LOW TO SIGN ---" << std::endl;
+	printTitle("TEST 2: ROBOTOMY REQUEST (50% Chance)");
 	try {
-		Bureaucrat stagiaire("Stagiaire", 150);
-		Form	   contract("Contract", 100, 50);
+		Bureaucrat  doc("Dr. House", 45); // Grade limite mais OK
+		RobotomyRequestForm robot("Bender");
 
-		std::cout << stagiaire << std::endl;
-		std::cout << contract << std::endl;
-
-		stagiaire.signForm(contract);
+		std::cout << doc << std::endl;
 		
-		std::cout << contract << std::endl;
+		doc.signForm(robot);
+
+		std::cout << "\n[Tentative 1]" << std::endl;
+		doc.executeForm(robot);
+		
+		std::cout << "\n[Tentative 2]" << std::endl;
+		doc.executeForm(robot);
+		
+		std::cout << "\n[Tentative 3]" << std::endl;
+		doc.executeForm(robot);
+		
+		std::cout << "\n[Tentative 4]" << std::endl;
+		doc.executeForm(robot);
 	}
 	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << "Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n--- TEST 3 : FORM CREATION ERRORS ---" << std::endl;
+	printTitle("TEST 3: PRESIDENTIAL PARDON");
 	try {
-		Form badForm("Bad", 0, 50);
+		Bureaucrat  president("Zaphod", 1); // Le boss
+		PresidentialPardonForm pardon("Arthur Dent");
+
+		std::cout << president << std::endl;
+		
+		president.signForm(pardon);
+		president.executeForm(pardon);
 	}
 	catch (std::exception &e) {
-		std::cout << "Construction failed: " << e.what() << std::endl;
+		std::cerr << "Exception: " << e.what() << std::endl;
+	}
+
+	printTitle("TEST 4: ERROR HANDLING");
+	    
+	try {
+		std::cout << "[Cas A : Exécution sans signature]" << std::endl;
+		Bureaucrat badGuy("Hacker", 1);
+		PresidentialPardonForm illegalForm("Target");
+
+		badGuy.executeForm(illegalForm); 
+	}
+	catch (std::exception &e) {
+		std::cout << "Main catch: " << e.what() << std::endl;
+	}
+
+	std::cout << std::endl;
+
+	try {
+		std::cout << "[Cas B : Grade trop bas pour exécuter]" << std::endl;
+		Bureaucrat  stagiaire("Stagiaire", 140); // Peut signer Shrubbery (145) mais pas exec (137)
+		ShrubberyCreationForm bush("Buisson");
+
+		stagiaire.signForm(bush); // Ça devrait marcher
+		stagiaire.executeForm(bush); // Ça doit échouer (GradeTooLow)
+	}
+	catch (std::exception &e) {
+		std::cout << "Main catch: " << e.what() << std::endl;
 	}
 
 	return 0;

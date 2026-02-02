@@ -3,14 +3,12 @@ NAME        = bureaucrat
 CXX         = c++
 CXXFLAGS    = -Wall -Wextra -Werror -std=c++98
 
-# On définit le dossier pour garder le code lisible
 CHILDS_DIR  = childs/
 
-# 1. Attention : Form.cpp est devenu AForm.cpp
-# 2. On ajoute les fichiers du dossier childs
 SRCS        = main.cpp \
               Bureaucrat.cpp \
               AForm.cpp \
+			  Intern.cpp \
               $(CHILDS_DIR)ShrubberyCreationForm.cpp \
               $(CHILDS_DIR)RobotomyRequestForm.cpp \
               $(CHILDS_DIR)PresidentialPardonForm.cpp
@@ -24,14 +22,11 @@ all:        $(NAME)
 $(NAME):    $(OBJS)
 			$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-# Cette règle générique est assez intelligente pour gérer les sous-dossiers
-# Elle va créer les .o à côté des .cpp dans le dossier childs/
 %.o: %.cpp
 			$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 			$(RM) $(OBJS)
-			# Petit bonus : on nettoie aussi les fichiers créés par les arbres
 			$(RM) *_shrubbery
 
 fclean:     clean
@@ -39,7 +34,6 @@ fclean:     clean
 
 re:         fclean all
 
-# Ta règle run est pratique pour les tests rapides
 run:        re
 			./$(NAME)
 
