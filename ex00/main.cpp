@@ -19,7 +19,7 @@ int main()
 	{
 		std::cerr << "Exception caught: " << e.what() << '\n';
 	}
-	    
+
 	std::cout << "\n----------------------------------\n" << std::endl;
 
 	std::cout << "--- TEST 2 : Increment Error (Too High) ---" << std::endl;
@@ -40,7 +40,6 @@ int main()
 
 	std::cout << "\n----------------------------------\n" << std::endl;
 
-	// --- TEST 3 : ERREUR DECREMENTATION (Grade 150 -> 151) ---
 	std::cout << "--- TEST 3 : Decrement Error (Too Low) ---" << std::endl;
 	try
 	{
@@ -48,7 +47,7 @@ int main()
 		std::cout << stagiaire << std::endl;
 
 		std::cout << "Try to decrement grade 150..." << std::endl;
-		stagiaire.decrementGrade(); // BOOM ici
+		stagiaire.decrementGrade();
 	}
 	catch(const std::exception& e)
 	{
@@ -57,7 +56,6 @@ int main()
 
 	std::cout << "\n----------------------------------\n" << std::endl;
 
-	// --- TEST 4 : CONSTRUCTEUR INVALIDE (Trop haut) ---
 	std::cout << "--- TEST 4 : Constructor Error (Too High) ---" << std::endl;
 	try
 	{
@@ -71,7 +69,6 @@ int main()
 
 	std::cout << "\n----------------------------------\n" << std::endl;
 
-	// --- TEST 5 : CONSTRUCTEUR INVALIDE (Trop bas) ---
 	std::cout << "--- TEST 5 : Constructor Error (Too Low) ---" << std::endl;
 	try
 	{

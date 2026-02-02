@@ -1,6 +1,6 @@
 #include <iostream>
-#include <cstdlib> // Pour srand
-#include <ctime>   // Pour time
+#include <cstdlib>
+#include <ctime>
 
 #include "Bureaucrat.hpp"
 #include "AForm.hpp" 
@@ -18,7 +18,7 @@ int main()
 
 	printTitle("TEST 1: SHRUBBERY CREATION (Jardinage)");
 	try {
-		Bureaucrat  bob("Bob (Jardinier)", 137); // Grade suffisant pour tout
+		Bureaucrat  bob("Bob (Jardinier)", 137);
 		ShrubberyCreationForm shrub("Jardin");
 
 		std::cout << bob << std::endl;
@@ -33,7 +33,7 @@ int main()
 
 	printTitle("TEST 2: ROBOTOMY REQUEST (50% Chance)");
 	try {
-		Bureaucrat  doc("Dr. House", 45); // Grade limite mais OK
+		Bureaucrat  doc("Dr. House", 45);
 		RobotomyRequestForm robot("Bender");
 
 		std::cout << doc << std::endl;
@@ -58,7 +58,7 @@ int main()
 
 	printTitle("TEST 3: PRESIDENTIAL PARDON");
 	try {
-		Bureaucrat  president("Zaphod", 1); // Le boss
+		Bureaucrat  president("Zaphod", 1);
 		PresidentialPardonForm pardon("Arthur Dent");
 
 		std::cout << president << std::endl;
@@ -87,11 +87,11 @@ int main()
 
 	try {
 		std::cout << "[Cas B : Grade trop bas pour exécuter]" << std::endl;
-		Bureaucrat  stagiaire("Stagiaire", 140); // Peut signer Shrubbery (145) mais pas exec (137)
+		Bureaucrat  stagiaire("Stagiaire", 140);
 		ShrubberyCreationForm bush("Buisson");
 
-		stagiaire.signForm(bush); // Ça devrait marcher
-		stagiaire.executeForm(bush); // Ça doit échouer (GradeTooLow)
+		stagiaire.signForm(bush);
+		stagiaire.executeForm(bush);
 	}
 	catch (std::exception &e) {
 		std::cout << "Main catch: " << e.what() << std::endl;

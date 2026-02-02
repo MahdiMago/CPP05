@@ -6,7 +6,7 @@
 #include <exception>
 
 class Bureaucrat {
-private: 
+private:
 	const	std::string name;
 	int		grade;
 public:
